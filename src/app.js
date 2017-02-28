@@ -12,7 +12,7 @@ import {
 import Config from 'react-native-config';
 import firebase from 'firebase';
 
-import { Header } from './common/components';
+import { Header, Spinner, Button } from './common/components';
 import LoginForm from './LoginFormScene';
 import SignupForm from './SignupFormScene';
 
@@ -21,7 +21,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      mode: 'logIn', // signUp // loggedIn
+      mode: null, // 'logIn', // signUp // loggedIn
     };
   }
 
@@ -33,6 +33,16 @@ class App extends Component {
       storageBucket: Config.FIREBASE_STORAGE,
       messagingSenderId: Config.FIREBASE_SENDER,
     });
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ mode: 'loggedIn' });
+      } else {
+        this.setState({ mode: 'logIn' });
+      }
+    });
+
+    window.firebase = firebase;
   }
 
   _renderContent = () => {
@@ -41,8 +51,16 @@ class App extends Component {
         return <LoginForm onSignUpPress={() => this.setState({ mode: 'signUp' })} />;
       case 'signUp':
         return <SignupForm />;
+      case 'loggedIn':
+        return (
+          <View style={{ flexDirection: 'row', marginTop: 20 }}>
+            <Button onPress={() => firebase.auth().signOut()}>
+              로그아웃
+            </Button>
+          </View>
+        );
       default:
-        return null;
+        return <Spinner size="large" />;
     }
   }
 

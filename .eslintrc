@@ -10,6 +10,7 @@
       "__DEV__": true,
       "window": true,
       "navigator": true,
+      "firebase": true,
   },
   "env": {
       "node": true,

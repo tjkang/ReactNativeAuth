@@ -1,15 +1,46 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Button, Card, CardSection, Input } from './common/components';
+import { View, StyleSheet, Text } from 'react-native';
+import { Button, Card, CardSection, Input, Spinner } from './common/components';
 
 class LoginForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      error: '',
       email: '',
       password: '',
+      loading: false,
     };
+  }
+
+  _onLoginSuccess = () => {
+    this.setState({
+      email: '',
+      password: '',
+      error: '',
+      loading: false,
+    });
+  }
+
+  _onLoginFailure = (error) => {
+    console.log(error);
+    this.setState({
+      error: error.message || error,
+      loading: false,
+    });
+  }
+
+  _onLoginPress = () => {
+    const { email, password } = this.state;
+    this.setState({
+      error: '',
+      loading: true,
+    });
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(this._onLoginSuccess)
+      .catch(error => this._onLoginFailure(error));
   }
 
   _renderSignupButton = () => (
@@ -18,11 +49,17 @@ class LoginForm extends Component {
     </Button>
   );
 
-  _renderLoginButton = () => (
-    <Button onPress={() => console.log('login button Pressed')}>
-      로그인
-    </Button>
-  );
+  _renderLoginButton = () => {
+    if (this.state.loading) {
+      return <Spinner />;
+    }
+
+    return (
+      <Button onPress={this._onLoginPress}>
+        로그인
+      </Button>
+    );
+  }
 
   render() {
     return (
@@ -47,6 +84,10 @@ class LoginForm extends Component {
             />
           </CardSection>
 
+          <Text style={styles.errorTextStyle}>
+            {this.state.error}
+          </Text>
+
           <CardSection>
             {this._renderLoginButton()}
           </CardSection>
@@ -58,5 +99,23 @@ class LoginForm extends Component {
     );
   }
 }
+
+// ========================================================
+// PropTypes check
+// ========================================================
+LoginForm.propTypes = {
+  onSignUpPress: React.PropTypes.func.isRequired,
+};
+
+// ========================================================
+// Styles
+// ========================================================
+const styles = StyleSheet.create({
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red',
+  },
+});
 
 export default LoginForm;

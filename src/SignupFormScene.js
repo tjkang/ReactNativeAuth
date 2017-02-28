@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Button, Card, CardSection, Input } from './common/components';
+import { StyleSheet, Text } from 'react-native';
+import { Button, Card, CardSection, Input, Spinner } from './common/components';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -9,14 +9,59 @@ class LoginForm extends Component {
     this.state = {
       email: '',
       password: '',
+      confirmPassword: '',
+      error: '',
+      loading: false,
     };
   }
 
-  _renderSignupButton = () => (
-    <Button onPress={() => console.log('login button Pressed')}>
-      회원 가입
-    </Button>
-  );
+  _onSignupSuccess = () => {
+    this.setState({
+      email: '',
+      password: '',
+      confirmPassword: '',
+      error: '',
+      loading: false,
+    });
+  }
+
+  _onSignupFailure = (error) => {
+    console.log(error);
+    this.setState({
+      error: error.message || error,
+      loading: false,
+    });
+  }
+
+  _onSignupPress = () => {
+    const { email, password, confirmPassword } = this.state;
+    this.setState({
+      error: '',
+      loading: true,
+    });
+    if (password !== confirmPassword) {
+      this.setState({
+        error: 'Password is not matched!',
+        loading: false,
+      });
+      return;
+    }
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(this._onSignupSuccess)
+      .catch(error => this._onSignupFailure(error));
+  }
+
+  _renderSignupButton = () => {
+    if (this.state.loading) {
+      return <Spinner />;
+    }
+
+    return (
+      <Button onPress={this._onSignupPress}>
+        회원 가입
+      </Button>
+    );
+  }
 
   render() {
     return (
@@ -45,10 +90,14 @@ class LoginForm extends Component {
             secureTextEntry
             placeholder="confirm password"
             label="Confirm Password"
-            value={this.state.password}
-            onChangeText={password => this.setState({ password })}
+            value={this.state.confirmPassword}
+            onChangeText={confirmPassword => this.setState({ confirmPassword })}
           />
         </CardSection>
+
+        <Text style={styles.errorTextStyle}>
+          {this.state.error}
+        </Text>
 
         <CardSection>
           {this._renderSignupButton()}
@@ -57,5 +106,16 @@ class LoginForm extends Component {
     );
   }
 }
+
+// ========================================================
+// Styles
+// ========================================================
+const styles = StyleSheet.create({
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red',
+  },
+});
 
 export default LoginForm;
