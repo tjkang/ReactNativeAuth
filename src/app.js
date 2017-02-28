@@ -6,10 +6,9 @@
 
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
 
 import Config from 'react-native-config';
