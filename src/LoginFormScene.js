@@ -13,7 +13,7 @@ class LoginForm extends Component {
   }
 
   _renderSignupButton = () => (
-    <Button onPress={() => console.log('login button Pressed')}>
+    <Button onPress={this.props.onSignUpPress}>
       회원 가입
     </Button>
   );

@@ -14,10 +14,15 @@ import firebase from 'firebase';
 
 import { Header } from './common/components';
 import LoginForm from './LoginFormScene';
+import SignupForm from './SignupFormScene';
 
 class App extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      mode: 'logIn', // signUp // loggedIn
+    };
   }
 
   componentWillMount() {
@@ -30,11 +35,22 @@ class App extends Component {
     });
   }
 
+  _renderContent = () => {
+    switch (this.state.mode) {
+      case 'logIn':
+        return <LoginForm onSignUpPress={() => this.setState({ mode: 'signUp' })} />;
+      case 'signUp':
+        return <SignupForm />;
+      default:
+        return null;
+    }
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
         <Header headerText="Authentication" />
-        <LoginForm />
+        {this._renderContent()}
       </View>
     );
   }
