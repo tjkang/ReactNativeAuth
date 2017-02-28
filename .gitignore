@@ -53,5 +53,4 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 
-.env
 yarn.lock
