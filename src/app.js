@@ -12,8 +12,22 @@ import {
   View
 } from 'react-native';
 
+import Config from 'react-native-config';
+import firebase from 'firebase';
+
 class App extends Component {
+  componentWillMount() {
+    firebase.initializeApp({
+      apiKey: Config.FIREBASE_APIKEY,
+      authDomain: Config.FIREBASE_AUTHDOMAIN,
+      databaseURL: Config.FIREBASE_DB,
+      storageBucket: Config.FIREBASE_STORAGE,
+      messagingSenderId: Config.FIREBASE_SENDER,
+    });
+  }
+
   render() {
+    console.log(firebase.auth());
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
