@@ -1,30 +1,54 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { Button, Card, CardSection, Input, Spinner } from './common/components';
 
 class LoginForm extends Component {
   constructor(props) {
     super(props);
+    this._hasMounted = false;
 
     this.state = {
       error: '',
       email: '',
       password: '',
       loading: false,
+      authenticating: false,
     };
   }
 
-  _onLoginSuccess = () => {
-    this.setState({
-      email: '',
-      password: '',
-      error: '',
-      loading: false,
+  componentWillMount() {
+    // to check if this component has been mounted
+    if (!this._hasMounted) {
+      Actions.refresh({
+        hideNavBar: true, // hideNavBar whiling checking if user has loggedIn
+      });
+      this.setState({
+        authenticating: true,
+      });
+    }
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!this._hasMounted) {
+        // if this has not been mounted, check if is user has loggedIn
+        if (user) {
+          Actions.main();
+        } else {
+          Actions.refresh({
+            hideNavBar: false, // show navBar for LoginForm
+          });
+          this.setState({ authenticating: false });
+        }
+        this._hasMounted = true;
+      }
     });
   }
 
+  _onLoginSuccess = () => {
+    Actions.main();
+  }
+
   _onLoginFailure = (error) => {
-    console.log(error);
     this.setState({
       error: error.message || error,
       loading: false,
@@ -44,7 +68,7 @@ class LoginForm extends Component {
   }
 
   _renderSignupButton = () => (
-    <Button onPress={this.props.onSignUpPress}>
+    <Button onPress={() => Actions.signup()}>
       회원 가입
     </Button>
   );
@@ -62,6 +86,9 @@ class LoginForm extends Component {
   }
 
   render() {
+    if (this.state.authenticating) {
+      return <Spinner size="large" />;
+    }
     return (
       <View>
         <Card>
@@ -104,7 +131,6 @@ class LoginForm extends Component {
 // PropTypes check
 // ========================================================
 LoginForm.propTypes = {
-  onSignUpPress: React.PropTypes.func.isRequired,
 };
 
 // ========================================================

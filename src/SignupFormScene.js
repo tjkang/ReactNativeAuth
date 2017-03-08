@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { Button, Card, CardSection, Input, Spinner } from './common/components';
 
 class LoginForm extends Component {
@@ -16,17 +17,10 @@ class LoginForm extends Component {
   }
 
   _onSignupSuccess = () => {
-    this.setState({
-      email: '',
-      password: '',
-      confirmPassword: '',
-      error: '',
-      loading: false,
-    });
+    Actions.main();
   }
 
   _onSignupFailure = (error) => {
-    console.log(error);
     this.setState({
       error: error.message || error,
       loading: false,
@@ -65,44 +59,46 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <Card>
-        <CardSection>
-          <Input
-            placeholder="user@abc.com"
-            label="Email"
-            value={this.state.email}
-            onChangeText={email => this.setState({ email })}
-          />
-        </CardSection>
+      <View>
+        <Card>
+          <CardSection>
+            <Input
+              placeholder="user@abc.com"
+              label="Email"
+              value={this.state.email}
+              onChangeText={email => this.setState({ email })}
+            />
+          </CardSection>
 
-        <CardSection>
-          <Input
-            secureTextEntry
-            placeholder="password"
-            label="Password"
-            value={this.state.password}
-            onChangeText={password => this.setState({ password })}
-          />
-        </CardSection>
+          <CardSection>
+            <Input
+              secureTextEntry
+              placeholder="password"
+              label="Password"
+              value={this.state.password}
+              onChangeText={password => this.setState({ password })}
+            />
+          </CardSection>
 
-        <CardSection>
-          <Input
-            secureTextEntry
-            placeholder="confirm password"
-            label="Confirm Password"
-            value={this.state.confirmPassword}
-            onChangeText={confirmPassword => this.setState({ confirmPassword })}
-          />
-        </CardSection>
+          <CardSection>
+            <Input
+              secureTextEntry
+              placeholder="confirm password"
+              label="Confirm Password"
+              value={this.state.confirmPassword}
+              onChangeText={confirmPassword => this.setState({ confirmPassword })}
+            />
+          </CardSection>
 
-        <Text style={styles.errorTextStyle}>
-          {this.state.error}
-        </Text>
+          <Text style={styles.errorTextStyle}>
+            {this.state.error}
+          </Text>
 
-        <CardSection>
-          {this._renderSignupButton()}
-        </CardSection>
-      </Card>
+          <CardSection>
+            {this._renderSignupButton()}
+          </CardSection>
+        </Card>
+      </View>
     );
   }
 }
