@@ -132,6 +132,38 @@ eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-react-native
 
  [동영상]: https://www.youtube.com/playlist?list=PL9f8_QifuTL4CS8-OyA-4WADhkddOnRS4
 
+#### 특정 룰에 대하여 disable 하기(한 파일 전체에 적용)
+파일 제일 위쪽에 아래와 같이 설정 
+
+```
+/* eslint-disable react/jsx-max-props-per-line */
+```
+
+
+## 6. Router 추가
+[react-native-router-flux] 라이브러리 인스톨
+[react-native-router-flux]: https://github.com/aksonov/react-native-router-flux
+
+
+```
+yarn add react-native-router-flux
+
+```
+
+#### Component 에서 Router config 설정하기
+ex) Router navBar 에 대한 설정
+
+```
+import { Actions } from 'react-native-router-flux';
+.....
+componentWillMount() {
+	Actions.refresh({
+   		hideNavBar: true, // hideNavBar
+  	});
+}
+
+```
+
 
 ### TODOs
 
