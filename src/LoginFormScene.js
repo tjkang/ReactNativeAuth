@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Button, Card, CardSection, Input, Spinner } from './common/components';
+import { Button, Card, CardSection, Input, Spinner } from './components';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -13,12 +13,6 @@ class LoginForm extends Component {
       password: '',
       loading: false,
     };
-  }
-
-  componentWillMount() {
-    // Actions.refresh({
-    //   hideNavBar: true, // hideNavBar whiling checking if user has loggedIn
-    // });
   }
 
   _onLoginSuccess = () => {

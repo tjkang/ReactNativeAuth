@@ -10,7 +10,7 @@ import {
 import _ from 'lodash';
 
 import { Actions } from 'react-native-router-flux';
-import { Button, CardSection } from './common/components';
+import { Button, CardSection } from './components';
 
 class TopicList extends Component {
   constructor(props) {
@@ -70,13 +70,11 @@ class TopicList extends Component {
     });
   }
 
-  _renderRow = (rowData) => {
-    return (
-      <CardSection>
-        <Text>{rowData.title}</Text>
-      </CardSection>
-    );
-  }
+  _renderRow = rowData => (
+    <CardSection>
+      <Text>{rowData.title}</Text>
+    </CardSection>
+  );
 
   render() {
     let loadingComponent = null;

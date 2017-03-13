@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Button } from './common/components';
+import { Button } from './components';
 
 const Logout = () => {
   const onSignoutPress = () => {

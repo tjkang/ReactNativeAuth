@@ -23,6 +23,7 @@ class App extends Component {
       isLoggedIn: false,
     };
   }
+
   componentWillMount() {
     firebase.initializeApp({
       apiKey: Config.FIREBASE_APIKEY,
