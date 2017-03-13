@@ -6,42 +6,19 @@ import { Button, Card, CardSection, Input, Spinner } from './common/components';
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this._hasMounted = false;
 
     this.state = {
       error: '',
       email: '',
       password: '',
       loading: false,
-      authenticating: false,
     };
   }
 
   componentWillMount() {
-    // to check if this component has been mounted
-    if (!this._hasMounted) {
-      Actions.refresh({
-        hideNavBar: true, // hideNavBar whiling checking if user has loggedIn
-      });
-      this.setState({
-        authenticating: true,
-      });
-    }
-
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!this._hasMounted) {
-        // if this has not been mounted, check if is user has loggedIn
-        if (user) {
-          Actions.main();
-        } else {
-          Actions.refresh({
-            hideNavBar: false, // show navBar for LoginForm
-          });
-          this.setState({ authenticating: false });
-        }
-        this._hasMounted = true;
-      }
-    });
+    // Actions.refresh({
+    //   hideNavBar: true, // hideNavBar whiling checking if user has loggedIn
+    // });
   }
 
   _onLoginSuccess = () => {
@@ -86,9 +63,6 @@ class LoginForm extends Component {
   }
 
   render() {
-    if (this.state.authenticating) {
-      return <Spinner size="large" />;
-    }
     return (
       <View>
         <Card>

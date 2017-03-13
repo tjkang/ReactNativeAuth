@@ -7,15 +7,15 @@ import {
 } from 'react-native';
 
 // Make a component
-const Button = ({ onPress, children }) => {
-  const { textStyle, buttonStyle } = styles;
+const Button = ({ onPress, children, buttonStyle }) => {
+  const { defaultTextStyle, defaultButtonStyle } = styles;
 
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={buttonStyle}
+      style={[defaultButtonStyle, buttonStyle]}
     >
-      <Text style={textStyle}>
+      <Text style={defaultTextStyle}>
         {children}
       </Text>
     </TouchableOpacity>
@@ -28,13 +28,14 @@ const Button = ({ onPress, children }) => {
 Button.propTypes = {
   onPress: React.PropTypes.func.isRequired,
   children: React.PropTypes.string.isRequired,
+  buttonStyle: React.PropTypes.any,
 };
 
 // ========================================================
 // Styles
 // ========================================================
 const styles = StyleSheet.create({
-  textStyle: {
+  defaultTextStyle: {
     alignSelf: 'center',
     color: '#007aff',
     fontSize: 16,
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
   },
-  buttonStyle: {
+  defaultButtonStyle: {
     flex: 1,
     alignSelf: 'stretch',
     backgroundColor: '#fff',

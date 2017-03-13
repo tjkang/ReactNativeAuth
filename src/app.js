@@ -7,16 +7,22 @@
 import React, { Component } from 'react';
 import {
   View,
+  Text,
 } from 'react-native';
 
 import Config from 'react-native-config';
 import firebase from 'firebase';
 
-import { Actions } from 'react-native-router-flux';
-
 import Router from './Router';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isAppReady: false,
+      isLoggedIn: false,
+    };
+  }
   componentWillMount() {
     firebase.initializeApp({
       apiKey: Config.FIREBASE_APIKEY,
@@ -29,9 +35,26 @@ class App extends Component {
     window.firebase = firebase;
   }
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.setState({
+        isAppReady: true,
+        isLoggedIn: (user !== null),
+      });
+    });
+  }
+
   render() {
+    const { isAppReady, isLoggedIn } = this.state;
+    if (!isAppReady) {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text>Loading</Text>
+        </View>
+      );
+    }
     return (
-      <Router />
+      <Router isLoggedIn={isLoggedIn} />
     );
   }
 }
