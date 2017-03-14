@@ -1,3 +1,8 @@
+#Summary
+Firebase 를 이용한 회원가입 및 로그인 및 Fireabse Database 를 이용한 간단 ListView 목록 보여주기
+App Icon 및 Launch Screen 을 추가하여 처음 앱을 Start 시 리소스들을 로딩하거나 인증 처리를 하는동안 Launch Screen을 띄어주며 다 끝난후 인증 상태에 따라 로그인 화면 혹은 메인 화면을 보여주는 Sample 프로젝트
+ - 
+
 ## 1.시작
 ```
  $> react-native init ReactNativeAuth

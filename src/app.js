@@ -12,6 +12,7 @@ import {
 
 import Config from 'react-native-config';
 import firebase from 'firebase';
+import SplashScreen from 'react-native-splash-screen';
 
 import Router from './Router';
 
@@ -42,17 +43,14 @@ class App extends Component {
         isAppReady: true,
         isLoggedIn: (user !== null),
       });
+      setTimeout(() => SplashScreen.hide(), 100);
     });
   }
 
   render() {
     const { isAppReady, isLoggedIn } = this.state;
     if (!isAppReady) {
-      return (
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text>Loading</Text>
-        </View>
-      );
+        return <View />;
     }
     return (
       <Router isLoggedIn={isLoggedIn} />
