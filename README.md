@@ -180,6 +180,7 @@ yarn add react-native-splash-screen
 
 ```
 설치 참조: [react-native-splash-screen]
+
 [react-native-splash-screen]: https://github.com/crazycodeboy/react-native-splash-screen#installation
 
 ### TODOs
