@@ -26,15 +26,15 @@ class TopicList extends Component {
     this._list = [];
   }
 
-  componentWillMount() {
-    Actions.refresh({
-      rightTitle: '로그아웃',
-      onRight: () => {
-        firebase.auth().signOut();
-        Actions.auth();
-      },
-    });
-  }
+  // componentWillMount() {
+  //   Actions.refresh({
+  //     rightTitle: '로그아웃',
+  //     onRight: () => {
+  //       firebase.auth().signOut();
+  //       Actions.auth();
+  //     },
+  //   });
+  // }
 
   async componentDidMount() {
     const ref = firebase.database().ref('topics');
@@ -86,7 +86,7 @@ class TopicList extends Component {
       );
     }
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <View style={styles.inputContainerStyle}>
           <TextInput
             style={styles.inputStyle}
