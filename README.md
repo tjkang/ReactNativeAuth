@@ -139,7 +139,7 @@ eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-react-native
  [동영상]: https://www.youtube.com/playlist?list=PL9f8_QifuTL4CS8-OyA-4WADhkddOnRS4
 
 #### 특정 룰에 대하여 disable 하기(한 파일 전체에 적용)
-파일 제일 위쪽에 아래와 같이 설정 
+파일 제일 위쪽에 아래와 같이 설정
 
 ```
 /* eslint-disable react/jsx-max-props-per-line */
@@ -174,7 +174,7 @@ componentWillMount() {
  [React Native(iOS) 앱 Icon 및 Splash/Launch Screen 추가하기]
 
  [React Native(iOS) 앱 Icon 및 Splash/Launch Screen 추가하기]: https://medium.com/@tjkangs/react-native-ios-앱-icon-및-splash-launch-screen-추가하기-bb93122ef455
- 
+
 ```
 yarn add react-native-splash-screen
 
@@ -182,6 +182,15 @@ yarn add react-native-splash-screen
 설치 참조: [react-native-splash-screen]
 
 [react-native-splash-screen]: https://github.com/crazycodeboy/react-native-splash-screen#installation
+
+## 8. Vector Icon 추가 및 Tabbar 추가
+```
+yarn add react-native-vector-icons
+react-native link react-native-vector-icons
+
+```
+
+
 
 ### TODOs
 
